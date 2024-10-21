@@ -1,35 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
+import NavigationPanel from './components/NavigationPanel';
+import NotesScroll from './components/NotesScroll';
+import Reminders from './components/Reminders';
+import { NoteCreate } from './types/note';
+import { Reminder } from './types/reminder';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App: React.FC = () => {
+  const [reminders, setReminders] = useState<Reminder[]>([]);
+  const [newNote, setNewNote] = useState<NoteCreate | null>(null);
+
+  const addReminder = (reminder: { text: string; date: string }) => {
+    setReminders([...reminders, { ...reminder, id: Date.now() }]);
+  };
+
+  const addNote = (note: NoteCreate) => {
+    setNewNote(note);
+  };
+
+  const updateReminder = (id: number, updatedReminder: { text: string; date: string }) => {
+    setReminders(reminders.map(reminder => 
+      reminder.id === id ? { ...reminder, ...updatedReminder } : reminder
+    ));
+  };
+
+  const deleteReminder = (id: number) => {
+    setReminders(reminders.filter(reminder => reminder.id !== id));
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="App">
+      <NavigationPanel addReminder={addReminder} addNote={addNote} />
+      <NotesScroll newNote={newNote} />
+      <Reminders 
+        reminders={reminders} 
+        updateReminder={updateReminder} 
+        deleteReminder={deleteReminder}
+      />
+    </div>
+  );
 }
 
-export default App
+export default App;

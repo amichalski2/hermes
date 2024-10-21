@@ -1,0 +1,30 @@
+.navigation-panel {
+  background-color: var(--background);
+  color: var(--text-color);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.logo {
+  margin-bottom: 2rem;
+  color: var(--accent-color);
+  width: 30%;
+  max-width: 150px;
+}
+
+.logo img {
+  width: 100%;
+  height: auto;
+}
+
+/* Usunięto style dla .nav-item, ponieważ nie jest już używane */
+
+.navigation-panel .chatbot-area {
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
