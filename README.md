@@ -21,7 +21,7 @@ Hermes is a note management application that leverages LLMs for content processi
 
 ## 🖼️ Application Preview
 
-![Application Preview](./images/hermesui.png)
+![Application Preview](public/hermesui.png)
 
 ## 🛠️ Technologies
 - FastAPI
@@ -40,7 +40,7 @@ Hermes is a note management application that leverages LLMs for content processi
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/amichalski2/hermes.git
 cd hermes
 ```
 
