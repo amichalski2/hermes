@@ -1,0 +1,244 @@
+.chatbot-area {
+  background-color: var(--background);
+  color: var(--text-color);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.chat-messages {
+  display: flex;
+  flex-direction: column;
+  height: 60vh;
+  max-height: 65vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
+.chat-input-container {
+  position: relative;
+}
+
+.chat-input {
+  display: flex;
+  align-items: flex-start;
+  background-color: white;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  overflow: hidden;
+  padding: 5px 10px;
+}
+
+.input-wrapper {
+  flex-grow: 1;
+  padding: 10px;
+  position: relative;
+}
+
+.input-wrapper::before {
+  content: attr(data-value);
+  position: absolute;
+  top: 0;
+  left: 10px;
+  right: 10px;
+  bottom: 0;
+  pointer-events: none;
+  white-space: pre-wrap;
+  overflow: hidden;
+  padding: 10px;
+  color: var(--text-color);
+}
+
+.input-wrapper[data-command]::before {
+  content: attr(data-command) attr(data-value);
+}
+
+.input-wrapper[data-command]::before {
+  color: var(--accent-color);
+  font-weight: bold;
+}
+
+.chat-input textarea {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  background: transparent;
+  color: var(--text-color);
+  resize: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+  min-height: 24px;
+  max-height: 150px;
+  padding: 0;
+  margin: 0;
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+.chat-input button {
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border-radius: 40%;
+  align-self: flex-end;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  margin-left: 5px;
+}
+
+.chat-input textarea::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-input textarea::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.chat-input textarea::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+.chat-input textarea::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.chat-input button:hover {
+  background-color: var(--hover-color);
+}
+
+.chat-input button svg {
+  width: 20px;
+  height: 20px;
+}
+
+.command-placeholder {
+  color: var(--accent-color);
+  font-weight: bold;
+  margin-right: 5px;
+  padding: 2px 5px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  cursor: pointer;
+  align-self: flex-start;
+  margin-top: 5px;
+}
+
+.command-placeholder.selected {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.command-list {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.command-item {
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.command-item:hover,
+.command-item.selected {
+  background-color: var(--background);
+}
+
+.command-name {
+  font-weight: bold;
+  color: var(--accent-color);
+}
+
+.command-description {
+  color: var(--text-color);
+  font-size: 14px;
+}
+
+.message {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  max-width: 100%;
+  width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  align-self: flex-start;
+  box-sizing: border-box;
+}
+
+.message.user {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.message.ai {
+  background-color: var(--background);
+  color: var(--text-color);
+}
+
+.message .markdown-content {
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.message .markdown-content p {
+  margin: 0 0 10px 0;
+}
+
+.message .markdown-content pre {
+  background-color: #f4f4f4;
+  border-radius: 4px;
+  padding: 10px;
+  overflow-x: auto;
+  max-width: 100%;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.message .markdown-content code {
+  background-color: #f4f4f4;
+  border-radius: 2px;
+  padding: 2px 4px;
+  font-family: monospace;
+}
+
+.message .markdown-content ul, 
+.message .markdown-content ol {
+  margin: 0 0 10px 20px;
+}
+
+.message .markdown-content blockquote {
+  border-left: 4px solid #ccc;
+  margin: 0 0 10px 0;
+  padding-left: 10px;
+  color: #666;
+}
+
+.message .markdown-content img {
+  max-width: 100%;
+  height: auto;
+}
