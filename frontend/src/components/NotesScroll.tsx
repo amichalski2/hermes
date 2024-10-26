@@ -4,6 +4,7 @@ import './NotesScroll.css';
 import { Note } from '../types/note';
 import { getNotes, deleteNote, updateNote } from '../api/notes';
 import { NoteCreate } from '../types/note';
+import logo from '../assets/hermes_logo.png';
 
 interface NotesScrollProps {
   newNote: NoteCreate | null;
@@ -53,6 +54,9 @@ const NotesScroll: React.FC<NotesScrollProps> = ({ newNote }) => {
 
   return (
     <div className="notes-scroll">
+      <div className="logo">
+        <img src={logo} alt="Logo" />
+      </div>
       {notes.map((note) => (
         <div key={note.id} className="note-item">
           {editingNote && editingNote.id === note.id ? (

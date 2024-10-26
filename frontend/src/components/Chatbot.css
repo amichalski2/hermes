@@ -7,8 +7,12 @@
 }
 
 .chat-messages {
-  height: 65%;
+  display: flex;
+  flex-direction: column;
+  height: 60vh;
+  max-height: 65vh;
   overflow-y: auto;
+  overflow-x: hidden;
   margin-bottom: 20px;
   padding: 10px;
   border: 1px solid var(--border-color);
@@ -136,17 +140,6 @@
   color: white;
 }
 
-
-/* .cancel-command {
-  background: none;
-  border: none;
-  color: var(--text-color);
-  cursor: pointer;
-  font-size: 12px;
-  margin-left: 5px;
-  padding: 2px 5px;
-} */
-
 .command-list {
   position: absolute;
   bottom: 100%;
@@ -181,4 +174,71 @@
 .command-description {
   color: var(--text-color);
   font-size: 14px;
+}
+
+.message {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  max-width: 100%;
+  width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  align-self: flex-start;
+  box-sizing: border-box;
+}
+
+.message.user {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.message.ai {
+  background-color: var(--background);
+  color: var(--text-color);
+}
+
+.message .markdown-content {
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.message .markdown-content p {
+  margin: 0 0 10px 0;
+}
+
+.message .markdown-content pre {
+  background-color: #f4f4f4;
+  border-radius: 4px;
+  padding: 10px;
+  overflow-x: auto;
+  max-width: 100%;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.message .markdown-content code {
+  background-color: #f4f4f4;
+  border-radius: 2px;
+  padding: 2px 4px;
+  font-family: monospace;
+}
+
+.message .markdown-content ul, 
+.message .markdown-content ol {
+  margin: 0 0 10px 20px;
+}
+
+.message .markdown-content blockquote {
+  border-left: 4px solid #ccc;
+  margin: 0 0 10px 0;
+  padding-left: 10px;
+  color: #666;
+}
+
+.message .markdown-content img {
+  max-width: 100%;
+  height: auto;
 }

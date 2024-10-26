@@ -1,15 +1,14 @@
-FROM python:3.12
+FROM python:3.12-slim
 
 WORKDIR /app
 
-COPY pyproject.toml poetry.lock* /app/
-
+COPY pyproject.toml poetry.lock ./
 RUN pip install poetry && \
     poetry config virtualenvs.create false && \
-    poetry install --no-dev --no-interaction --no-ansi
+    poetry install --no-dev
 
-COPY . /app
+COPY . .
 
-RUN chmod +x /app/start.sh
+RUN chmod +x start.sh
 
-CMD ["/app/start.sh"]
+CMD ["./start.sh"]

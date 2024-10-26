@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
 import './Chatbot.css';
 import { NoteCreate } from '../types/note';
 import { createNote, createRawNote } from '../api/notes';
+import { useChat } from '../hooks/useChat';
 
 interface ChatbotProps {
   addReminder: (reminder: { text: string; date: string }) => void;
@@ -24,6 +26,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ addReminder, addNote }) => {
   const commandPlaceholderRef = useRef<HTMLDivElement>(null);
   const commandListRef = useRef<HTMLDivElement>(null);
   const [filteredCommands, setFilteredCommands] = useState(commands);
+  const { messages, sendChatMessage } = useChat();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -132,54 +135,52 @@ const Chatbot: React.FC<ChatbotProps> = ({ addReminder, addNote }) => {
     const content = inputValue.trim();
     console.log(`Submitting content: "${content}" with active command: "${activeCommand}"`);
 
-    switch (activeCommand) {
+    if (content === '') return;
+
+    setInputValue('');
+    const commandToExecute = activeCommand;
+    setActiveCommand('');
+    setIsCommandSelected(false);
+
+    switch (commandToExecute) {
       case 'remind':
         console.log('Adding reminder');
         addReminder({ text: content, date: new Date().toISOString().split('T')[0] });
         break;
+        
       case 'add_raw':
-        {
-          console.log('Adding raw note');
+        console.log('Adding raw note');
+        try {
           const newNote: NoteCreate = {
             title: content.split('\n')[0] || 'Nowa notatka',
             content,
           };
-          console.log('New raw note:', newNote);
-          try {
-            const createdNote = await createRawNote(newNote);
-            console.log('Raw note created:', createdNote);
-            addNote(createdNote);
-          } catch (error) {
-            console.error('Error creating raw note:', error);
-          }
+          const createdNote = await createRawNote(newNote);
+          addNote(createdNote);
+        } catch (error) {
+          console.error('Error creating raw note:', error);
         }
         break;
+        
       case 'add':
-        {
-          console.log('Adding processed note');
+        console.log('Adding processed note');
+        try {
           const newNote: NoteCreate = {
             title: 'Nowa notatka',
             content,
           };
-          console.log('New processed note:', newNote);
-          try {
-            const createdNote = await createNote(newNote);
-            console.log('Processed note created:', createdNote);
-            addNote(createdNote);
-          } catch (error) {
-            console.error('Error creating processed note:', error);
-          }
+          const createdNote = await createNote(newNote);
+          addNote(createdNote);
+        } catch (error) {
+          console.error('Error creating processed note:', error);
         }
         break;
+        
       default:
-        console.log("Sending message:", content);
-        break;
+        console.log("Sending message to AI:", content);
+        await sendChatMessage(content);
     }
-
-    setInputValue('');
-    setActiveCommand('');
-    setIsCommandSelected(false);
-  };
+};
 
   const handleCommandClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -190,7 +191,11 @@ const Chatbot: React.FC<ChatbotProps> = ({ addReminder, addNote }) => {
   return (
     <div className="chatbot-area">
       <div className="chat-messages">
-        {/* Tu będą wyświetlane wiadomości */}
+        {messages.map((message, index) => (
+          <div key={index} className={`message ${message.isUser ? 'user' : 'ai'}`}>
+            <ReactMarkdown>{message.content}</ReactMarkdown>
+          </div>
+        ))}
       </div>
       <div className="chat-input-container">
         <div className="chat-input">
