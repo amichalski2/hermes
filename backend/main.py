@@ -1,16 +1,14 @@
-from fastapi import FastAPI, Depends, HTTPException, Body, Query, Request
+from fastapi import FastAPI, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
-from models.pydantic import ReminderCreate, Reminder, NoteCreate, Note, ChatMessage, ChatResponse
+from models.pydantic import ReminderCreate, Reminder, NoteCreate, Note
 from crud.notes import NoteCRUD
 from crud.reminders import ReminderCRUD
 from database import engine, get_db
 from services.chat_service import chat_service
-import os
 from models import models
 from fastapi.responses import StreamingResponse
-import asyncio
-from sse_starlette.sse import EventSourceResponse
+
 
 models.Base.metadata.create_all(bind=engine)
 
